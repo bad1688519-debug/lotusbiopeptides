@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">Semax + Selank 20 mg LotusBio research material</title>
+<desc id="d">White LotusBio product box and vial with green branding on a light laboratory-style background.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fbfcfc"/><stop offset="1" stop-color="#eef3f1"/></linearGradient>
+  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#159a88"/><stop offset="1" stop-color="#006f63"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffffff"/><stop offset=".55" stop-color="#f7faf9"/><stop offset=".78" stop-color="#dce7e4"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="170%" height="180%"><feDropShadow dx="0" dy="11" stdDeviation="13" flood-color="#173f39" flood-opacity=".16"/></filter>
+  <style>
+    .brand{font:700 22px Arial,sans-serif;fill:#0d3d38;letter-spacing:.4px}
+    .small{font:600 9px Arial,sans-serif;fill:#4d6864;letter-spacing:1.5px}
+    .product{font:700 34px Arial,sans-serif;fill:#0c3734}
+    .vname{font:700 10px Arial,sans-serif;fill:#173d39}
+  </style>
+</defs>
+<rect width="512" height="512" rx="28" fill="url(#bg)"/>
+<ellipse cx="258" cy="408" rx="198" ry="24" fill="#24453f" opacity=".09"/>
+<g filter="url(#shadow)">
+  <polygon points="58,140 84,124 358,124 340,140" fill="#eef4f2"/>
+  <polygon points="58,140 84,124 84,350 58,366" fill="#e2ebe8"/>
+  <rect x="84" y="140" width="274" height="226" rx="8" fill="#fff"/>
+  <path d="M207 366 C264 326 292 276 358 224 L358 366 Z" fill="#d9efea"/>
+  <path d="M258 366 C309 336 327 304 358 274 L358 366 Z" fill="#54b7a9" opacity=".58"/>
+  <path d="M304 366 C332 345 345 328 358 314 L358 366 Z" fill="url(#teal)"/>
+  <g transform="translate(98 158)">
+    <path d="M13 11 C23 1 31 3 34 14 C25 16 18 16 13 11Z" fill="#0b8b7b"/>
+    <path d="M0 16 C9 5 17 7 20 19 C12 21 5 21 0 16Z" fill="#14a08e"/>
+    <path d="M11 22 C21 13 30 16 31 27 C22 29 15 28 11 22Z" fill="#087567"/>
+  </g>
+  <text x="136" y="179" class="brand">LOTUSBIO</text>
+  <text x="93" y="200" class="small">ADVANCING RESEARCH</text>
+  <text x="93" y="216" class="small">FOR A HEALTHIER TOMORROW</text>
+  <text x="92" y="244" class="product" style="font-size:28px"><tspan x="92" dy="0">Semax +</tspan><tspan x="92" dy="36">Selank</tspan></text>
+  <text x="93" y="315" class="small">RESEARCH MATERIAL</text>
+  <text x="93" y="337" style="font:600 8px Arial,sans-serif;fill:#536d69;letter-spacing:.8px">FOR LABORATORY RESEARCH USE ONLY</text>
+</g>
+<g filter="url(#shadow)">
+  <rect x="374" y="159" width="75" height="29" rx="9" fill="#087b6d"/>
+  <rect x="379" y="153" width="65" height="17" rx="7" fill="#159f8c"/>
+  <rect x="379" y="184" width="65" height="150" rx="16" fill="url(#glass)" stroke="#b9ccc7" stroke-width="2"/>
+  <rect x="383" y="230" width="57" height="70" rx="4" fill="#fff" stroke="#d8e4e1"/>
+  <path d="M392 244 C398 237 405 239 407 247 C401 249 396 249 392 244Z" fill="#0d8d7e"/>
+  <text x="410" y="250" text-anchor="middle" style="font:700 7px Arial,sans-serif;fill:#0f675e">LOTUSBIO</text>
+  <text x="411.5" y="271" text-anchor="middle" class="vname">Semax + Sela…</text>
+  <rect x="387" y="303" width="49" height="25" rx="6" fill="url(#teal)"/>
+  <text x="411.5" y="321" text-anchor="middle" style="font:700 15px Arial,sans-serif;fill:#fff">20 mg</text>
+</g>
+</svg>

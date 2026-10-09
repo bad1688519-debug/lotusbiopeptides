@@ -1,0 +1,9 @@
+/* Alternate domain styling; keep the current LotusBio layout and branding. */
+body{background:#fcfdfb}
+.notice,.hero,.dark{background:#15343c}
+.mint{background:#d4ecdc}
+.hero .eyebrow,h1 em{color:#d4ecdc}
+.button{border-radius:5px}
+.hero-visual>img{filter:brightness(.8) saturate(.78)}
+header{border-bottom:1px solid #e1e9e4}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

@@ -1,0 +1,38 @@
+/* Focused visual adjustments for the home and factory pages. */
+.hero-visual > img {
+  object-position: 62% center;
+}
+
+.page-hero {
+  max-width: 1000px;
+  padding: 56px 24px 34px;
+}
+
+.page-hero h1 {
+  max-width: 680px;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.04;
+  margin: 12px 0 14px;
+}
+
+.page-hero .lede {
+  max-width: 600px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.video-grid {
+  max-width: 1000px;
+  gap: 20px;
+  padding-bottom: 72px;
+}
+
+.video-card video {
+  aspect-ratio: 16 / 8;
+}
+
+@media (max-width: 760px) {
+  .page-hero { padding-top: 42px; }
+  .video-grid { padding-bottom: 56px; }
+  .video-card video { aspect-ratio: 16 / 9; }
+}
