@@ -183,15 +183,23 @@ const LOTUSBIO_SITE_LOGO = '/assets/logo.png';
     const count = Number(quantity.value);
     const validCount = Number.isInteger(count) && count >= 1 && count <= 100000 ? count : 1;
     const product = productPanel.dataset.product;
+    const sku = selector.value.split('·').pop().trim().toUpperCase();
+    const priceMap = window.LOTUS_LISTED_PRICES || {};
+    const unitPrice = Object.prototype.hasOwnProperty.call(priceMap, sku) ? priceMap[sku] : null;
+    const priceDetails = unitPrice === null
+      ? '\nListed price: On request'
+      : '\nListed unit price: USD ' + unitPrice.toFixed(2) + ' / box' +
+        '\nListed subtotal: USD ' + (unitPrice * validCount).toFixed(2);
     const body = 'Lotus Bio business product inquiry\nProduct: ' + product +
       '\nSpecification: ' + selector.value +
-      '\nQuantity: ' + validCount + ' box(es)' +
+      '\nQuantity: ' + validCount + ' box(es)' + priceDetails +
       '\nDestination country: [please specify]' +
-      '\n\nPlease confirm availability, documentation, shipping feasibility and final pricing.';
+      '\n\nListed prices exclude freight. This message is a request, not a paid order. Please confirm availability, documentation, shipping feasibility and final pricing.';
     email.href = 'mailto:info@lotusbio.cn?subject=' + encodeURIComponent('Lotus Bio product inquiry: ' + product) + '&body=' + encodeURIComponent(body);
     whatsapp.href = 'https://wa.me/85292734987?text=' + encodeURIComponent(body);
   }
   selector.addEventListener('change', refresh);
   quantity.addEventListener('input', refresh);
+  document.addEventListener('lotus-prices-ready', refresh);
   refresh();
 })();
