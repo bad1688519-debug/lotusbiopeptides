@@ -1,0 +1,20 @@
+name: Validate second-site catalog
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [design/global-b2b-store-positioning-20261112]
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check catalog and JavaScript
+        run: node tests/validate-site.mjs
