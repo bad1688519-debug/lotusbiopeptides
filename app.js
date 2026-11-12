@@ -131,3 +131,75 @@ const LOTUSBIO_SITE_LOGO = '/assets/logo.png';
   }
   document.querySelectorAll('a.contact[href="https://wa.me/85292734987"]').forEach(primary => primary.replaceWith(createContacts()));
 })();
+
+
+// Cross-link the independent catalog with the official Lotus Bio manufacturer site.
+// Use one meaningful navigation link instead of duplicating manufacturer content.
+(() => {
+  document.querySelectorAll('header nav').forEach(nav => {
+    if (nav.querySelector('a[href="https://lbiopeptides.com/"]')) return;
+    const link = document.createElement('a');
+    link.href = 'https://lbiopeptides.com/';
+    link.textContent = 'Official Website';
+    link.rel = 'noopener';
+    link.setAttribute('aria-label', 'Lotus Bio official manufacturer website');
+    nav.append(link);
+  });
+  document.querySelectorAll('.site-footer').forEach(footer => {
+    if (footer.querySelector('a[href="https://lbiopeptides.com/"]')) return;
+    const company = [...footer.querySelectorAll('div')].find(div => div.querySelector('h2')?.textContent.trim() === 'Company');
+    if (!company) return;
+    const link = document.createElement('a');
+    link.href = 'https://lbiopeptides.com/';
+    link.rel = 'noopener';
+    link.textContent = 'Official Manufacturer Website';
+    company.append(link);
+  });
+})();
+
+
+// Every product page offers direct Email and WhatsApp inquiries with the selected SKU.
+// The customer remains responsible for sending the pre-filled message in their app.
+(() => {
+  const productPanel = document.querySelector('.product-order[data-product]');
+  const selector = document.querySelector('#quote-spec');
+  const quantity = document.querySelector('#quote-qty');
+  if (!productPanel || !selector || !quantity || productPanel.querySelector('.lb-direct-inquiry')) return;
+  const controls = document.createElement('div');
+  controls.className = 'lb-direct-inquiry';
+  const email = document.createElement('a');
+  email.className = 'button dark';
+  email.textContent = 'Email product inquiry';
+  const whatsapp = document.createElement('a');
+  whatsapp.className = 'button mint';
+  whatsapp.textContent = 'WhatsApp product inquiry';
+  whatsapp.target = '_blank';
+  whatsapp.rel = 'noopener noreferrer';
+  const note = document.createElement('small');
+  note.textContent = 'For business procurement inquiries. Listed prices exclude shipping; final availability and terms are confirmed by our team.';
+  controls.append(email, whatsapp, note);
+  productPanel.querySelector('#add-quote')?.after(controls);
+  function refresh() {
+    const count = Number(quantity.value);
+    const validCount = Number.isInteger(count) && count >= 1 && count <= 100000 ? count : 1;
+    const product = productPanel.dataset.product;
+    const sku = selector.value.split('·').pop().trim().toUpperCase();
+    const priceMap = window.LOTUS_LISTED_PRICES || {};
+    const unitPrice = Object.prototype.hasOwnProperty.call(priceMap, sku) ? priceMap[sku] : null;
+    const priceDetails = unitPrice === null
+      ? '\nListed price: On request'
+      : '\nListed unit price: USD ' + unitPrice.toFixed(2) + ' / box' +
+        '\nListed subtotal: USD ' + (unitPrice * validCount).toFixed(2);
+    const body = 'Lotus Bio business product inquiry\nProduct: ' + product +
+      '\nSpecification: ' + selector.value +
+      '\nQuantity: ' + validCount + ' box(es)' + priceDetails +
+      '\nDestination country: [please specify]' +
+      '\n\nListed prices exclude freight. This message is a request, not a paid order. Please confirm availability, documentation, shipping feasibility and final pricing.';
+    email.href = 'mailto:info@lotusbio.cn?subject=' + encodeURIComponent('Lotus Bio product inquiry: ' + product) + '&body=' + encodeURIComponent(body);
+    whatsapp.href = 'https://wa.me/85292734987?text=' + encodeURIComponent(body);
+  }
+  selector.addEventListener('change', refresh);
+  quantity.addEventListener('input', refresh);
+  document.addEventListener('lotus-prices-ready', refresh);
+  refresh();
+})();

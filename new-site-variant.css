@@ -1,9 +1,92 @@
-/* Alternate domain styling; keep the current LotusBio layout and branding. */
-body{background:#fcfdfb}
-.notice,.hero,.dark{background:#15343c}
-.mint{background:#d4ecdc}
-.hero .eyebrow,h1 em{color:#d4ecdc}
-.button{border-radius:5px}
-.hero-visual>img{filter:brightness(.8) saturate(.78)}
-header{border-bottom:1px solid #e1e9e4}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Lotus Bio second-site independent B2B catalog design system.
+   The official manufacturer site is intentionally not affected. */
+:root{--lb-forest:#143c32;--lb-forest-deep:#0d2d27;--lb-mint:#dcece1;--lb-cream:#f7f7f1;--lb-border:#dbe6dd;--lb-copy:#233d35}
+body{background:var(--lb-cream);color:var(--lb-copy)}
+.notice{background:var(--lb-forest-deep);color:#e6f1e7}
+header{background:#fff;border-bottom:1px solid var(--lb-border);box-shadow:0 3px 18px rgba(10,44,34,.04)}
+header nav{align-items:center}
+header nav a{color:#244237;font-weight:600}
+header nav a:hover{color:#107550}
+header .button.dark,.button.dark{background:var(--lb-forest);color:#fff;border-radius:10px}
+.button.mint{background:var(--lb-mint);color:var(--lb-forest-deep)}
+.button{border-radius:10px;gap:10px;transition:transform .16s,background .16s}
+.button:hover{transform:translateY(-1px)}
+.hero{background:var(--lb-forest-deep);min-height:570px}
+.hero-copy{padding-top:90px;padding-bottom:52px}
+.hero .eyebrow,.hero h1 em{color:#c9e5ce}
+.hero h1{font-weight:550;letter-spacing:-2.1px;max-width:760px}
+.hero .intro{color:#d6e6db;font-size:16px;max-width:590px}
+.hero-visual>img{filter:brightness(.63) saturate(.65);object-position:62% center}
+.hero .floating{background:#f2f5eb;border-radius:18px;box-shadow:0 20px 46px rgba(0,0,0,.15)}
+.hero-bottom{color:#c7dcd2}
+.strip{background:#eff4ec;color:#35564a;border-color:var(--lb-border)}
+.section{scroll-margin-top:20px}
+.section-head h2,.editorial h2{color:var(--lb-forest-deep)}
+.product-grid{gap:22px}
+.product,.catalog-card{background:#fff;border:1px solid var(--lb-border);border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(13,45,39,.045)}
+.product:hover,.catalog-card:hover{background:#f8fcf8;box-shadow:0 16px 42px rgba(13,45,39,.12)}
+.product .round{background:#ebf5ec;border-color:var(--lb-border)}
+.catalog-main{padding-top:64px}
+.catalog-tools{max-width:750px}
+.catalog-tools input{border-radius:12px}
+.catalog-card img{background:#f4f8f3;object-fit:contain}
+.catalog-card>div{padding:20px}
+.catalog-card h2{color:var(--lb-forest-deep)}
+.catalog-card span{color:#196e51}
+.catalog-help{background:#eaf2e9;border:1px solid var(--lb-border);border-radius:16px}
+.quality{background:#eaf1e9}
+.oem,.site-footer,footer{background:var(--lb-forest-deep)}
+.inquiry{background:#fff}
+input,textarea,select{border-radius:9px;background:#fff}
+dialog{border-radius:20px;border-color:var(--lb-border);box-shadow:0 28px 70px rgba(0,0,0,.19)}
+.quote-row{align-items:center}
+.quote-row button{border:1px solid #cbdad0;background:#fff;border-radius:8px}
+#quote-review a,#quote-review button{margin-top:8px}
+#quote-review label{margin-top:18px}
+@media(max-width:850px){header nav{display:flex;gap:8px 18px}header nav a{font-size:12px}.hero-copy{padding:58px 6% 42px}.hero-visual{height:300px}}
+@media(max-width:520px){.hero h1{font-size:clamp(34px,9vw,46px);letter-spacing:-1px}.hero-bottom{flex-wrap:wrap;gap:12px}.catalog-card>div{padding:14px}.button{min-height:44px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button,.product,.catalog-card{transition:none}}
+
+/* Homepage storefront journey */
+.lb-shopping-steps{background:#fff;padding:70px 6%;border-bottom:1px solid var(--lb-border)}
+.lb-shopping-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:9%}
+.lb-shopping-steps h2{color:var(--lb-forest-deep);margin:12px 0 18px}
+.lb-shopping-steps p:not(.eyebrow){font-size:15px;line-height:1.85;color:#526a5e;max-width:600px}
+.lb-shopping-steps ol{padding:0;margin:0;list-style:none;display:grid;gap:14px}
+.lb-shopping-steps li{background:#f1f7ef;border:1px solid var(--lb-border);border-radius:16px;padding:21px 25px;display:grid;gap:7px}
+.lb-shopping-steps li strong{font-size:17px;color:#174536}
+.lb-shopping-steps li span{font-size:13px;line-height:1.55;color:#53685e}
+@media(max-width:850px){.lb-shopping-inner{grid-template-columns:1fr;gap:32px}.lb-shopping-steps{padding:50px 6%}}
+
+/* Public list prices reflect SKU-specific workbook values; never render a discount. */
+.catalog-price-note{font-size:16px!important;font-weight:700;color:#155a41!important;margin:0 0 16px!important}
+#listed-price-display{line-height:1.4}
+
+/* Business inquiry links provided on every product detail page */
+.lb-direct-inquiry{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+.lb-direct-inquiry>.button{flex:1 1 190px;text-align:center;min-height:46px}
+.lb-direct-inquiry>small{width:100%;font-size:12px;line-height:1.55;color:#5a7165}
+@media(max-width:520px){.lb-direct-inquiry{flex-direction:column}.lb-direct-inquiry>.button{flex:0 0 auto;width:100%}}
+
+/* Second domain: a product-led storefront hero, not a factory-led duplicate. */
+.hero-visual{background:radial-gradient(circle at 52% 40%,#fbfdf7 2%,#e6efe7 66%,#d5e6d8 100%)}
+.hero-visual>img{object-fit:contain;object-position:center;padding:48px 42px 68px;filter:none}
+.hero-visual .image-caption{color:#1c4838;font-weight:700}
+.hero-visual .pulse{background:#187955}
+@media(max-width:850px){.hero-visual>img{padding:22px 20px 70px}.hero-visual .floating{bottom:14px}}
+@media(max-width:500px){.hero-visual .floating{max-width:calc(100% - 32px);width:auto;left:16px;right:16px;padding:14px}.hero-visual .floating strong{font-size:21px;margin:8px 0}.hero-visual .image-caption{font-size:8px}}
+
+/* Quantity editing in multi-item B2B inquiry review. */
+#quote-items .quote-row{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:center;gap:12px}
+#quote-items .quote-row p{overflow-wrap:anywhere;margin:8px 0}
+.lb-quote-quantity{display:grid;gap:5px;min-width:85px;font-size:12px;color:#496255}
+.lb-quote-quantity input{width:100%;padding:9px 8px;border:1px solid #b9cbc0;border-radius:9px}
+.lb-quote-summary{margin:18px 0;padding:14px 16px;border-radius:12px;background:#e8f2ea;color:#164634;font-size:14px;font-weight:700;line-height:1.55}
+@media(max-width:540px){#quote-items .quote-row{grid-template-columns:1fr auto}#quote-items .quote-row p{grid-column:1/-1}.lb-quote-quantity{width:110px}}
+
+/* Compact inquiry dialog remains accessible on short mobile screens. */
+#quote-review{box-sizing:border-box;max-height:min(88dvh,850px);overflow-y:auto;overscroll-behavior:contain}
+#quote-review .lb-inquiry-disabled{opacity:.48;cursor:not-allowed}
+#quote-review .lb-inquiry-disabled:focus-visible{outline:3px solid #4c9870;outline-offset:3px}
+#quote-review #quote-storage{min-height:20px;overflow-wrap:anywhere}
+@media(max-width:560px){#quote-review{width:calc(100% - 20px);padding:19px;border-radius:14px}#quote-review h2{font-size:26px}#quote-review>#quote-email,#quote-review>#quote-whatsapp{display:flex;margin:9px 0;width:100%;min-height:46px}}
