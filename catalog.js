@@ -7,4 +7,6 @@
  cards.forEach(card=>{const match=normalize(card.dataset.search).includes(q);card.hidden=!match;if(match)count++;});
  document.querySelector('#catalog-count').textContent=`Showing ${count} of ${cards.length} products`;
  document.querySelector('#catalog-empty').hidden=count!==0;});
+ const initialQuery=new URLSearchParams(window.location.search).get('q');
+ if(initialQuery){input.value=initialQuery;input.dispatchEvent(new Event('input'));}
 })();
