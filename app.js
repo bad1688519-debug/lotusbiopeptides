@@ -156,3 +156,42 @@ const LOTUSBIO_SITE_LOGO = '/assets/logo.png';
     company.append(link);
   });
 })();
+
+
+// Every product page offers direct Email and WhatsApp inquiries with the selected SKU.
+// The customer remains responsible for sending the pre-filled message in their app.
+(() => {
+  const productPanel = document.querySelector('.product-order[data-product]');
+  const selector = document.querySelector('#quote-spec');
+  const quantity = document.querySelector('#quote-qty');
+  if (!productPanel || !selector || !quantity || productPanel.querySelector('.lb-direct-inquiry')) return;
+  const controls = document.createElement('div');
+  controls.className = 'lb-direct-inquiry';
+  const email = document.createElement('a');
+  email.className = 'button dark';
+  email.textContent = 'Email product inquiry';
+  const whatsapp = document.createElement('a');
+  whatsapp.className = 'button mint';
+  whatsapp.textContent = 'WhatsApp product inquiry';
+  whatsapp.target = '_blank';
+  whatsapp.rel = 'noopener noreferrer';
+  const note = document.createElement('small');
+  note.textContent = 'For business procurement inquiries. Listed prices exclude shipping; final availability and terms are confirmed by our team.';
+  controls.append(email, whatsapp, note);
+  productPanel.querySelector('#add-quote')?.after(controls);
+  function refresh() {
+    const count = Number(quantity.value);
+    const validCount = Number.isInteger(count) && count >= 1 && count <= 100000 ? count : 1;
+    const product = productPanel.dataset.product;
+    const body = 'Lotus Bio business product inquiry\nProduct: ' + product +
+      '\nSpecification: ' + selector.value +
+      '\nQuantity: ' + validCount + ' box(es)' +
+      '\nDestination country: [please specify]' +
+      '\n\nPlease confirm availability, documentation, shipping feasibility and final pricing.';
+    email.href = 'mailto:info@lotusbio.cn?subject=' + encodeURIComponent('Lotus Bio product inquiry: ' + product) + '&body=' + encodeURIComponent(body);
+    whatsapp.href = 'https://wa.me/85292734987?text=' + encodeURIComponent(body);
+  }
+  selector.addEventListener('change', refresh);
+  quantity.addEventListener('input', refresh);
+  refresh();
+})();
