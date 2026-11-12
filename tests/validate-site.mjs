@@ -26,7 +26,7 @@ for(const js of ['app.js','quote.js','catalog.js','listed-prices.js']){
   new vm.Script(read(js),{filename:js});
 }
 
-const exceptions=new Set(['SM10','SM20','SM30','MS15']);
+const unlistedSlugs=new Set();
 const productDir=path.join(root,'products');
 let productPages=0,options=0,priced=0,requested=0;
 for(const dirent of fs.readdirSync(productDir,{withFileTypes:true})){
@@ -35,7 +35,11 @@ for(const dirent of fs.readdirSync(productDir,{withFileTypes:true})){
   if(!fs.existsSync(filename))continue;
   const html=fs.readFileSync(filename,'utf8');
   const select=html.match(/<select id="quote-spec">([\s\S]*?)<\/select>/);
-  if(!select)continue;
+  if(!select){
+    if(/noindex/i.test(html))unlistedSlugs.add(dirent.name);
+    continue;
+  }
+  assert.doesNotMatch(html,/noindex/i,'Unlisted page must not offer product options: '+dirent.name);
   productPages++;
   assert.match(html,/\/quote\.js/,'Missing quote implementation: '+dirent.name);
   assert.match(html,/\/app\.js/,'Missing app actions: '+dirent.name);
@@ -44,12 +48,36 @@ for(const dirent of fs.readdirSync(productDir,{withFileTypes:true})){
     options++;
     const sku=option[1].split('·').pop().trim();
     if(Object.hasOwn(prices,sku)){priced++;continue;}
-    assert.ok(exceptions.has(sku),'Unpriced/unknown product SKU: '+dirent.name+' => '+sku);
-    requested++;
+    assert.fail('Unpriced/unknown product SKU: '+dirent.name+' => '+sku);
   }
 }
 assert.ok(productPages>=40,'Unexpectedly few product pages');
-assert.equal(requested,4,'Expected only four explicitly unpriced product options');
+assert.equal(requested,0,'Unpriced SKU options must not be published');
+assert.ok(unlistedSlugs.has('semaglutide'),'Semaglutide legacy page must remain noindex');
+const sitemap=read('sitemap.xml');
+const publicFiles=[];
+function collect(dir){
+  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+    if(entry.name.startsWith('.')||['node_modules','tests'].includes(entry.name))continue;
+    const file=path.join(dir,entry.name);
+    if(entry.isDirectory())collect(file);
+    else if(/\.(html|js|xml)$/.test(entry.name))publicFiles.push(file);
+  }
+}
+collect(root);
+for(const slug of unlistedSlugs){
+  assert.ok(!sitemap.includes('/products/'+slug+'/'),'Unlisted product in sitemap: '+slug);
+  for(const file of publicFiles){
+    if(file===path.join(productDir,slug,'index.html'))continue;
+    const content=fs.readFileSync(file,'utf8');
+    assert.ok(!content.includes('/products/'+slug+'/'),'Unlisted product reference in '+path.relative(root,file));
+  }
+}
+for(const match of sitemap.matchAll(/<loc>[^<]*\/products\/([^/<]+)\/?<\/loc>/g)){
+  const html=read('products/'+match[1]+'/index.html');
+  assert.doesNotMatch(html,/noindex/i,'Sitemap contains unlisted product: '+match[1]);
+  assert.match(html,/<select id="quote-spec">/,'Sitemap product must offer approved SKUs: '+match[1]);
+}
 const catalog=read('wholesale-peptides/index.html');
 for(const m of catalog.matchAll(/href="(\/products\/[^"]+\/?)"/g)){
   const target=path.join(root,m[1].slice(1),'index.html');
