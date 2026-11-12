@@ -75,3 +75,11 @@ dialog{border-radius:20px;border-color:var(--lb-border);box-shadow:0 28px 70px r
 .hero-visual .pulse{background:#187955}
 @media(max-width:850px){.hero-visual>img{padding:22px 20px 70px}.hero-visual .floating{bottom:14px}}
 @media(max-width:500px){.hero-visual .floating{max-width:calc(100% - 32px);width:auto;left:16px;right:16px;padding:14px}.hero-visual .floating strong{font-size:21px;margin:8px 0}.hero-visual .image-caption{font-size:8px}}
+
+/* Quantity editing in multi-item B2B inquiry review. */
+#quote-items .quote-row{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:center;gap:12px}
+#quote-items .quote-row p{overflow-wrap:anywhere;margin:8px 0}
+.lb-quote-quantity{display:grid;gap:5px;min-width:85px;font-size:12px;color:#496255}
+.lb-quote-quantity input{width:100%;padding:9px 8px;border:1px solid #b9cbc0;border-radius:9px}
+.lb-quote-summary{margin:18px 0;padding:14px 16px;border-radius:12px;background:#e8f2ea;color:#164634;font-size:14px;font-weight:700;line-height:1.55}
+@media(max-width:540px){#quote-items .quote-row{grid-template-columns:1fr auto}#quote-items .quote-row p{grid-column:1/-1}.lb-quote-quantity{width:110px}}
