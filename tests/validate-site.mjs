@@ -50,7 +50,10 @@ for(const dirent of fs.readdirSync(productDir,{withFileTypes:true})){
   for(const option of select[1].matchAll(/<option[^>]*>([^<]*)<\/option>/g)){
     options++;
     const sku=option[1].split('·').pop().trim();
-    if(Object.hasOwn(prices,sku)){pageSkus.add(sku);priced++;continue;}
+    if(Object.hasOwn(prices,sku)){
+      assert.ok(html.includes('data-price-sku="'+sku+'">USD $'+prices[sku].toFixed(2)+' / box'),'Static price must match approved price: '+sku);
+      pageSkus.add(sku);priced++;continue;
+    }
     assert.fail('Unpriced/unknown product SKU: '+dirent.name+' => '+sku);
   }
 }
@@ -123,3 +126,5 @@ assert.match(quote,/destination country/,'Direct form submission must verify the
 assert.doesNotMatch(read('listed-prices.js').split('window.LOTUS_LISTED_PRICES=')[1],/discount|coupon|percent off|special offer/i,
   'Do not advertise discounts in public price data');
 console.log('PASS: '+productPages+' product pages, '+options+' selector options, '+priced+' priced options, '+requested+' marked price-on-request; 136 approved SKU prices, JS syntax, links and contact channels.');
+
+assert.ok(!read('sitemap.xml').includes('/raw-materials/'),'Unpriced raw-material projects must not be in the catalog sitemap');
