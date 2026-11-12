@@ -60,4 +60,15 @@ assert.match(document.querySelector('#quote-items').textContent,/\$791\.00/,'3 R
 document.querySelector('.quote-row button').click();
 assert.equal(document.querySelector('[data-count]').textContent,'1');
 assert.match(document.querySelector('#quote-items').textContent,/\$245\.00/);
+// Removing the final item must prevent opening empty email and WhatsApp drafts.
+document.querySelector('.quote-row button').click();
+assert.equal(document.querySelector('[data-count]').textContent,'0');
+assert.equal(document.querySelector('#quote-email').getAttribute('aria-disabled'),'true');
+assert.equal(document.querySelector('#quote-whatsapp').getAttribute('aria-disabled'),'true');
+let prevented=false;
+const attempt=new window.MouseEvent('click',{bubbles:true,cancelable:true});
+document.querySelector('#quote-whatsapp').dispatchEvent(attempt);
+prevented=attempt.defaultPrevented;
+assert.ok(prevented,'Empty WhatsApp draft should be blocked');
+assert.match(document.querySelector('#quote-storage').textContent,/Add a product/);
 console.log('PASS: product prices, cart add/edit/remove, subtotal recalculation and coherent email/WhatsApp draft.');
