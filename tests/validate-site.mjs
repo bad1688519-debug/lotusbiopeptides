@@ -27,6 +27,7 @@ for(const js of ['app.js','quote.js','catalog.js','listed-prices.js']){
 }
 
 const unlistedSlugs=new Set();
+const approvedProducts=new Map();
 const productDir=path.join(root,'products');
 let productPages=0,options=0,priced=0,requested=0;
 for(const dirent of fs.readdirSync(productDir,{withFileTypes:true})){
@@ -41,13 +42,15 @@ for(const dirent of fs.readdirSync(productDir,{withFileTypes:true})){
   }
   assert.doesNotMatch(html,/noindex/i,'Unlisted page must not offer product options: '+dirent.name);
   productPages++;
+  const pageSkus=new Set();
+  approvedProducts.set(dirent.name,pageSkus);
   assert.match(html,/\/quote\.js/,'Missing quote implementation: '+dirent.name);
   assert.match(html,/\/app\.js/,'Missing app actions: '+dirent.name);
   assert.match(html,/rel="canonical"/,'Missing canonical: '+dirent.name);
   for(const option of select[1].matchAll(/<option[^>]*>([^<]*)<\/option>/g)){
     options++;
     const sku=option[1].split('·').pop().trim();
-    if(Object.hasOwn(prices,sku)){priced++;continue;}
+    if(Object.hasOwn(prices,sku)){pageSkus.add(sku);priced++;continue;}
     assert.fail('Unpriced/unknown product SKU: '+dirent.name+' => '+sku);
   }
 }
@@ -79,6 +82,20 @@ for(const match of sitemap.matchAll(/<loc>[^<]*\/products\/([^/<]+)\/?<\/loc>/g)
   assert.match(html,/<select id="quote-spec">/,'Sitemap product must offer approved SKUs: '+match[1]);
 }
 const catalog=read('wholesale-peptides/index.html');
+const catalogSlugs=new Set();
+for(const card of catalog.matchAll(/<a\b([^>]*\bdata-catalog-item\b[^>]*)>/g)){
+  const attrs=card[1];
+  const slug=attrs.match(/href="\/products\/([^/"]+)\/"/)?.[1];
+  assert.ok(approvedProducts.has(slug),'Catalog card must target an approved product: '+slug);
+  assert.ok(!catalogSlugs.has(slug),'Duplicate catalog product: '+slug);
+  catalogSlugs.add(slug);
+  const search=attrs.match(/data-search="([^"]*)"/)?.[1]||'';
+  for(const sku of approvedProducts.get(slug)){
+    assert.ok(search.toUpperCase().split(/\s+/).includes(sku),'Catalog search missing approved SKU: '+slug+' => '+sku);
+  }
+}
+assert.equal(catalogSlugs.size,approvedProducts.size,'Every published product must have one catalog card');
+
 for(const m of catalog.matchAll(/href="(\/products\/[^"]+\/?)"/g)){
   const target=path.join(root,m[1].slice(1),'index.html');
   assert.ok(fs.existsSync(target),'Broken product link: '+m[1]);
