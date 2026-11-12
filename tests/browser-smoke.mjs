@@ -14,7 +14,14 @@ async function testViewport(label, contextOptions) {
   const gate = page.locator('#age-confirmation');
   if (await gate.isVisible()) await page.locator('#age-continue').click();
   await page.locator('header nav a[href="https://lbiopeptides.com/"]').waitFor();
-  await page.locator('.lb-shopping-steps').waitFor();
+  await page.locator('.store-hero').waitFor();
+  await page.locator('.store-product-card').first().waitFor();
+  await page.locator('#home-search').fill('RT30');
+  await page.locator('.store-search button').click();
+  await page.waitForURL('**/wholesale-peptides/?q=RT30');
+  assert.equal(await page.locator('#catalog-search').inputValue(),'RT30');
+  assert.equal(await page.locator('[data-catalog-item]:visible').count(),1);
+  await page.goto(origin + '/', {waitUntil:'load'});
   const overflows = await page.evaluate(() => ({
     document: document.documentElement.scrollWidth,
     viewport: document.documentElement.clientWidth
