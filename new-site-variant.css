@@ -67,3 +67,11 @@ dialog{border-radius:20px;border-color:var(--lb-border);box-shadow:0 28px 70px r
 .lb-direct-inquiry>.button{flex:1 1 190px;text-align:center;min-height:46px}
 .lb-direct-inquiry>small{width:100%;font-size:12px;line-height:1.55;color:#5a7165}
 @media(max-width:520px){.lb-direct-inquiry{flex-direction:column}.lb-direct-inquiry>.button{flex:0 0 auto;width:100%}}
+
+/* Second domain: a product-led storefront hero, not a factory-led duplicate. */
+.hero-visual{background:radial-gradient(circle at 52% 40%,#fbfdf7 2%,#e6efe7 66%,#d5e6d8 100%)}
+.hero-visual>img{object-fit:contain;object-position:center;padding:48px 42px 68px;filter:none}
+.hero-visual .image-caption{color:#1c4838;font-weight:700}
+.hero-visual .pulse{background:#187955}
+@media(max-width:850px){.hero-visual>img{padding:22px 20px 70px}.hero-visual .floating{bottom:14px}}
+@media(max-width:500px){.hero-visual .floating{max-width:calc(100% - 32px);width:auto;left:16px;right:16px;padding:14px}.hero-visual .floating strong{font-size:21px;margin:8px 0}.hero-visual .image-caption{font-size:8px}}
