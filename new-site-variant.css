@@ -57,3 +57,7 @@ dialog{border-radius:20px;border-color:var(--lb-border);box-shadow:0 28px 70px r
 .lb-shopping-steps li strong{font-size:17px;color:#174536}
 .lb-shopping-steps li span{font-size:13px;line-height:1.55;color:#53685e}
 @media(max-width:850px){.lb-shopping-inner{grid-template-columns:1fr;gap:32px}.lb-shopping-steps{padding:50px 6%}}
+
+/* Public list prices reflect SKU-specific workbook values; never render a discount. */
+.catalog-price-note{font-size:16px!important;font-weight:700;color:#155a41!important;margin:0 0 16px!important}
+#listed-price-display{line-height:1.4}
