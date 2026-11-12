@@ -61,3 +61,9 @@ dialog{border-radius:20px;border-color:var(--lb-border);box-shadow:0 28px 70px r
 /* Public list prices reflect SKU-specific workbook values; never render a discount. */
 .catalog-price-note{font-size:16px!important;font-weight:700;color:#155a41!important;margin:0 0 16px!important}
 #listed-price-display{line-height:1.4}
+
+/* Business inquiry links provided on every product detail page */
+.lb-direct-inquiry{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+.lb-direct-inquiry>.button{flex:1 1 190px;text-align:center;min-height:46px}
+.lb-direct-inquiry>small{width:100%;font-size:12px;line-height:1.55;color:#5a7165}
+@media(max-width:520px){.lb-direct-inquiry{flex-direction:column}.lb-direct-inquiry>.button{flex:0 0 auto;width:100%}}
