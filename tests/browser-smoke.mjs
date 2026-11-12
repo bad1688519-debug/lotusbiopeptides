@@ -26,12 +26,12 @@ async function testViewport(label, contextOptions) {
   await page.goto(origin + '/products/retatrutide/', { waitUntil: 'load' });
   const rt = page.locator('#quote-spec');
   await rt.selectOption({ label: '30 mg × 10 vials · RT30' });
-  await page.locator('#listed-price-display').getByText('$182.00', { exact: false }).waitFor();
+  await page.waitForFunction(() => document.querySelector('#listed-price-display')?.textContent.includes('$182.00'));
   await page.locator('#quote-qty').fill('2');
   await page.locator('#add-quote').click();
-  await page.locator('[data-count]').first().getByText('1').waitFor();
+  await page.waitForFunction(() => document.querySelector('[data-count]')?.textContent === '1');
   await page.locator('[data-review]').first().click();
-  await page.locator('#quote-items').getByText('$364.00', { exact: false }).waitFor();
+  await page.waitForFunction(() => document.querySelector('#quote-items')?.textContent.includes('$364.00'));
   const whatsapp = await page.locator('#quote-whatsapp').getAttribute('href');
   assert.ok(whatsapp.includes('RT30'), label + ': WhatsApp link missing SKU');
   assert.ok(whatsapp.includes('%24364.00'), label + ': WhatsApp link missing total');
