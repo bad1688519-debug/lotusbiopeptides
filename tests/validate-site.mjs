@@ -60,4 +60,18 @@ const quote=read('quote.js');
 assert.match(quote,/mailto:info@lotusbio\.cn/);
 assert.match(quote,/wa\.me\/85292734987/);
 assert.match(quote,/listed-prices\.js/);
+// Global procurement form must collect a destination, and every direct product draft
+// must include the exact SKU and the listed-price line without displaying a discount.
+const home=read('index.html');
+assert.match(home,/name="country" required/,'Home inquiry country field must be required');
+assert.match(home,/<form data-inquiry>/,'Home inquiry form missing');
+const app=read('app.js');
+assert.match(app,/lotus-prices-ready/,'Direct product drafts must update when prices load');
+assert.match(app,/Listed unit price:/,'Direct product inquiry must list the confirmed unit price');
+assert.match(app,/Listed subtotal:/,'Direct product inquiry must include calculated subtotal');
+assert.match(quote,/\.qty=next|item\.qty=next/,'Buyer must be able to edit list quantities');
+assert.match(quote,/quote-whatsapp/,'Cart must support WhatsApp draft');
+assert.match(quote,/quote-email/,'Cart must support email draft');
+assert.doesNotMatch(read('listed-prices.js'),/discount|coupon|percent off|special offer/i,
+  'Do not advertise discounts in public price data');
 console.log('PASS: '+productPages+' product pages, '+options+' selector options, '+priced+' priced options, '+requested+' marked price-on-request; 136 approved SKU prices, JS syntax, links and contact channels.');
