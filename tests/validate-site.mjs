@@ -72,6 +72,9 @@ assert.match(app,/Listed subtotal:/,'Direct product inquiry must include calcula
 assert.match(quote,/\.qty=next|item\.qty=next/,'Buyer must be able to edit list quantities');
 assert.match(quote,/quote-whatsapp/,'Cart must support WhatsApp draft');
 assert.match(quote,/quote-email/,'Cart must support email draft');
+assert.match(quote,/Reply email:/,'Cart drafts must include the buyer reply address');
+assert.match(quote,/email\.addEventListener\('input',syncLinks\)/,'Email and WhatsApp drafts must refresh when the reply address changes');
+assert.match(quote,/destination country/,'Direct form submission must verify the destination country');
 assert.doesNotMatch(read('listed-prices.js').split('window.LOTUS_LISTED_PRICES=')[1],/discount|coupon|percent off|special offer/i,
   'Do not advertise discounts in public price data');
 console.log('PASS: '+productPages+' product pages, '+options+' selector options, '+priced+' priced options, '+requested+' marked price-on-request; 136 approved SKU prices, JS syntax, links and contact channels.');
