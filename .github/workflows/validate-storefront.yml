@@ -18,3 +18,7 @@ jobs:
           node-version: '22'
       - name: Check catalog and JavaScript
         run: node tests/validate-site.mjs
+      - name: Install DOM test dependency
+        run: npm install --no-save --no-package-lock jsdom@24
+      - name: Test cart and inquiry interactions
+        run: node tests/cart-interaction.mjs
