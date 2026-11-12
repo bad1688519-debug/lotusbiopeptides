@@ -131,3 +131,28 @@ const LOTUSBIO_SITE_LOGO = '/assets/logo.png';
   }
   document.querySelectorAll('a.contact[href="https://wa.me/85292734987"]').forEach(primary => primary.replaceWith(createContacts()));
 })();
+
+
+// Cross-link the independent catalog with the official Lotus Bio manufacturer site.
+// Use one meaningful navigation link instead of duplicating manufacturer content.
+(() => {
+  document.querySelectorAll('header nav').forEach(nav => {
+    if (nav.querySelector('a[href="https://lbiopeptides.com/"]')) return;
+    const link = document.createElement('a');
+    link.href = 'https://lbiopeptides.com/';
+    link.textContent = 'Official Website';
+    link.rel = 'noopener';
+    link.setAttribute('aria-label', 'Lotus Bio official manufacturer website');
+    nav.append(link);
+  });
+  document.querySelectorAll('.site-footer').forEach(footer => {
+    if (footer.querySelector('a[href="https://lbiopeptides.com/"]')) return;
+    const company = [...footer.querySelectorAll('div')].find(div => div.querySelector('h2')?.textContent.trim() === 'Company');
+    if (!company) return;
+    const link = document.createElement('a');
+    link.href = 'https://lbiopeptides.com/';
+    link.rel = 'noopener';
+    link.textContent = 'Official Manufacturer Website';
+    company.append(link);
+  });
+})();
